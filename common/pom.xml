@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.bloomreach.forge.whereused</groupId>
     <artifactId>whereused</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
   </parent>
 
   <name>Where Used Plugin Common</name>
@@ -13,7 +13,7 @@
   <artifactId>whereused-common</artifactId>
 
   <packaging>jar</packaging>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.1</version>
 
   <dependencies>
     <dependency>
