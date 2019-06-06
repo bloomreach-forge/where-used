@@ -3,8 +3,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.onehippo.cms7</groupId>
-    <artifactId>hippo-cms7-enterprise-project</artifactId>
+    <groupId>org.onehippo.cms7</groupId>
+    <artifactId>hippo-cms7-project</artifactId>
     <version>29</version>
   </parent>
 
@@ -26,22 +26,52 @@
     <lib.log4j.version>1.2.17</lib.log4j.version>
   </properties>
 
+
+  <scm>
+    <connection>scm:git:git@github.com:bloomreach-forge/where-used.git</connection>
+    <developerConnection>scm:git:git@github.com:bloomreach-forge/where-used.git</developerConnection>
+    <url>https://github.com/bloomreach-forge/where-used.git</url>
+    <tag>HEAD</tag>
+  </scm>
+  <distributionManagement>
+    <repository>
+      <name>Hippo Maven 2 Forge Repository</name>
+      <id>hippo-maven2-forge</id>
+      <url>https://maven.onehippo.com/content/repositories/forge-releases/</url>
+      <uniqueVersion>false</uniqueVersion>
+    </repository>
+  </distributionManagement>
+
+  <issueManagement>
+    <system>Jira</system>
+    <url>https://issues.onehippo.com/browse/HIPFORGE</url>
+  </issueManagement>
+
+  <ciManagement>
+    <system>Travis CI</system>
+    <url>https://travis-ci.org/bloomreach-forge/where-used</url>
+  </ciManagement>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+
   <repositories>
     <repository>
-      <id>hippo-maven2-enterprise</id>
-      <name>Hippo Maven 2 Enterprise</name>
-      <url>https://maven.onehippo.com/maven2-enterprise/</url>
-      <releases>
-        <updatePolicy>never</updatePolicy>
-      </releases>
+      <id>hippo</id>
+      <name>Hippo maven 2 repository.</name>
+      <url>http://maven.onehippo.com/maven2/</url>
     </repository>
     <repository>
-      <id>hippo-maven2-private</id>
-      <name>Hippo Private Maven 2</name>
-      <url>https://maven.onehippo.com/maven2-private</url>
-      <releases>
-        <updatePolicy>never</updatePolicy>
-      </releases>
+      <id>hippo-maven2-forge</id>
+      <name>Hippo Maven 2 Forge repository</name>
+      <url>http://maven.onehippo.com/maven2-forge/</url>
+      <snapshots/>
     </repository>
   </repositories>
 
@@ -133,7 +163,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
-          <version>3.3</version>
+          <version>3.7.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -200,21 +230,5 @@
       </plugin>
     </plugins>
   </build>
-
-  <scm>
-    <connection>scm:git:https://code.onehippo.org/prof-services/where-used.git</connection>
-    <developerConnection>scm:git:git@code.onehippo.org:prof-services/where-used.git</developerConnection>
-    <url>https://code.onehippo.org/prof-services/where-used</url>
-    <tag>HEAD</tag>
-  </scm>
-
-  <distributionManagement>
-    <repository>
-      <name>Hippo Maven 2 Private Repository</name>
-      <id>hippo-maven2-private</id>
-      <url> https://maven.onehippo.com/content/repositories/private-releases/</url>
-      <uniqueVersion>false</uniqueVersion>
-    </repository>
-  </distributionManagement>
 
 </project>
