@@ -26,21 +26,21 @@ In the root pom.xml add the property:
 Add the following dependencies in the SITE module:
 
     <dependency>
-        <groupId>com.bloomreach.cms.plugin</groupId>
-        <artifactId>bloomreach-where-used-plugin-site</artifactId>
+        <groupId>org.bloomreach.forge.whereused</groupId>
+        <artifactId>whereused-site</artifactId>
         <version>${whereused.version}</version>
     </dependency>
 
 In the CMS pom.xml add the following dependencies:
     
     <dependency>
-      <groupId>com.bloomreach.cms.plugin</groupId>
-      <artifactId>bloomreach-where-used-plugin-cms</artifactId>
+      <groupId>org.bloomreach.forge.whereused</groupId>
+      <artifactId>whereused-cms</artifactId>
       <version>${whereused.version}</version>
     </dependency>
     
     <dependency>
-      <groupId>com.bloomreach.cms.plugin</groupId>
-      <artifactId>bloomreach-where-used-plugin-repository</artifactId>
+      <groupId>org.bloomreach.forge.whereused</groupId>
+      <artifactId>whereused-repository</artifactId>
       <version>${whereused.version}</version>
     </dependency>

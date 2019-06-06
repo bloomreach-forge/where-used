@@ -9,8 +9,8 @@
   </parent>
 
   <name>where-used-plugin</name>
-  <groupId>com.bloomreach.cms.plugin</groupId>
-  <artifactId>bloomreach-where-used-plugin</artifactId>
+  <groupId>org.bloomreach.forge.whereused</groupId>
+  <artifactId>whereused</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 

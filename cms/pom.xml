@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <groupId>com.bloomreach.cms.plugin</groupId>
-    <artifactId>bloomreach-where-used-plugin</artifactId>
+    <groupId>org.bloomreach.forge.whereused</groupId>
+    <artifactId>whereused</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <name>Where Used Plugin CMS</name>
   <description>Where Used Plugin CMS</description>
-  <artifactId>bloomreach-where-used-plugin-cms</artifactId>
+  <artifactId>whereused-cms</artifactId>
   <packaging>jar</packaging>
   <version>1.0.0-SNAPSHOT</version>
 
@@ -50,8 +50,8 @@
     </dependency>
 
     <dependency>
-      <groupId>com.bloomreach.cms.plugin</groupId>
-      <artifactId>bloomreach-where-used-plugin-common</artifactId>
+      <groupId>org.bloomreach.forge.whereused</groupId>
+      <artifactId>whereused-common</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>

@@ -3,14 +3,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.bloomreach.cms.plugin</groupId>
-    <artifactId>bloomreach-where-used-plugin</artifactId>
+    <groupId>org.bloomreach.forge.whereused</groupId>
+    <artifactId>whereused</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
 
   <name>Where Used Plugin Common</name>
   <description>Where Used Plugin Common</description>
-  <artifactId>bloomreach-where-used-plugin-common</artifactId>
+  <artifactId>whereused-common</artifactId>
 
   <packaging>jar</packaging>
   <version>1.0.0-SNAPSHOT</version>
