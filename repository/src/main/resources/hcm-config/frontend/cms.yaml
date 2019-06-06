@@ -1,0 +1,17 @@
+definitions:
+  config:
+    /hippo:configuration/hippo:frontend/cms/cms-preview/workflowPlugin:
+        workflow.categories:
+          operation: override
+          value: ['default', 'whereused', 'translation', 'committype']
+        workflow.menuorder:
+          operation: override
+          value: ['publication', 'request', 'document', 'miscellaneous']
+    /hippo:configuration/hippo:frontend/cms/cms-services:
+      /hstRestWhereUsedProxyService:
+        jcr:primaryType: frontend:plugin
+        context.path: /site
+        ping.service.uri: /sites/_isAlive
+        plugin.class: org.hippoecm.frontend.service.restproxy.RestProxyServicePlugin
+        rest.uri: http://127.0.0.1/site/_whereused
+        service.id: hst.rest.where.used.proxy.service

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.bloomreach.cms.plugin</groupId>
+    <artifactId>bloomreach-where-used-plugin</artifactId>
+    <version>12.0.7-SNAPSHOT</version>
+  </parent>
+
+  <name>Where Used Plugin Common</name>
+  <description>Where Used Plugin Common</description>
+  <artifactId>bloomreach-where-used-plugin-common</artifactId>
+
+  <packaging>jar</packaging>
+  <version>12.0.7-SNAPSHOT</version>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.onehippo.cms7.hst</groupId>
+      <artifactId>hst-cms-restapi</artifactId>
+      <version>${hippo.hst.version}</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+</project>

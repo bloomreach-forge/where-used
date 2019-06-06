@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2011-2016 Hippo B.V. (http://www.onehippo.com)
+
+  Licensed under the Apache License, Version 2.0 (the  "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS"
+  BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+
+  <import resource="classpath:META-INF/hst-assembly/addon/org/hippoecm/hst/cmsrest/SpringComponentManager-cmsrest.xml"/>
+
+  <bean id="annotationJsonSerializer" class="org.hippoecm.hst.rest.custom.AnnotationJsonSerializer">
+    <constructor-arg type="java.lang.Class" value="java.lang.annotation.Annotation"/>
+  </bean>
+
+  <bean id="whereUsedJacksonJsonModuleVersion" class="com.fasterxml.jackson.core.util.VersionUtil"
+        factory-method="parseVersion">
+    <constructor-arg value="${project.version}"/>
+    <constructor-arg value="${project.groupId}"/>
+    <constructor-arg value="${project.artifactId}"/>
+  </bean>
+
+  <bean id="whereUsedRestJacksonJsonModule" class="com.fasterxml.jackson.databind.module.SimpleModule">
+    <constructor-arg value="whereUsedRestJacksonJsonModule"/>
+    <constructor-arg>
+      <ref bean="whereUsedJacksonJsonModuleVersion"/>
+    </constructor-arg>
+  </bean>
+
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject" ref="whereUsedRestJacksonJsonModule"/>
+    <property name="targetMethod" value="addSerializer"/>
+    <property name="arguments">
+      <ref bean="annotationJsonSerializer"/>
+    </property>
+  </bean>
+
+  <bean id="whereUsedRestJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider">
+    <property name="mapper" ref="whereUsedRestJacksonObjectMapper"/>
+  </bean>
+
+  <bean id="channelExceptionMapper"
+        class="org.hippoecm.hst.cmsrest.providers.exception.mappers.ChannelExceptionMapper"/>
+
+  <bean id="whereUsedRestJacksonObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
+
+  <!-- Enable Jackson JSON ObjectMapper default typing -->
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject" ref="whereUsedRestJacksonObjectMapper"/>
+    <property name="targetMethod" value="enableDefaultTyping"/>
+  </bean>
+
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject" ref="whereUsedRestJacksonObjectMapper"/>
+    <property name="targetMethod" value="enableDefaultTypingAsProperty"/>
+    <property name="arguments">
+      <list>
+        <value type="com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping">OBJECT_AND_NON_CONCRETE</value>
+        <value>@class</value>
+      </list>
+    </property>
+  </bean>
+
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject" ref="whereUsedRestJacksonObjectMapper"/>
+    <property name="targetMethod" value="registerModule"/>
+    <property name="arguments">
+      <ref bean="whereUsedRestJacksonJsonModule"/>
+    </property>
+  </bean>
+
+  <bean id="channelFilter" class="com.google.common.base.Predicates" factory-method="and">
+    <constructor-arg ref="allChannelFilters"/>
+  </bean>
+
+  <bean id="allChannelFilters" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetClass" value="org.apache.commons.collections.ListUtils"/>
+    <property name="targetMethod" value="union"/>
+    <property name="arguments">
+      <list>
+        <ref bean="defaultChannelFilters"/>
+        <ref bean="customChannelFilters"/>
+      </list>
+    </property>
+  </bean>
+
+  <!-- Default system channel filters be added here. -->
+  <bean id="defaultChannelFilters" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <property name="sourceList">
+      <list>
+        <bean id="contentBasedChannelFilter" class="org.hippoecm.hst.cmsrest.filter.ContentBasedChannelFilter"/>
+      </list>
+    </property>
+  </bean>
+
+  <!-- Custom channel filters may be overriden in their project specific assembly. -->
+  <bean id="customChannelFilters" class="org.springframework.beans.factory.config.ListFactoryBean">
+    <property name="sourceList">
+      <list>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="baseResource" abstract="true">
+    <property name="channelManager" ref="org.hippoecm.hst.configuration.channel.ChannelManager"/>
+    <property name="channelFilter" ref="channelFilter"/>
+  </bean>
+
+  <bean id="jaxrsWhereUsedRestCxfServerFactoryBean" class="org.apache.cxf.jaxrs.JAXRSServerFactoryBean">
+    <property name="address" value="/"/>
+    <property name="providers">
+      <list>
+        <ref bean="whereUsedRestJsonProvider"/>
+        <ref bean="channelExceptionMapper"/>
+      </list>
+    </property>
+    <property name="resourceProviders">
+      <list>
+        <bean class="org.apache.cxf.jaxrs.lifecycle.SingletonResourceProvider">
+          <constructor-arg>
+            <bean class="com.bloomreach.whereused.rest.WhereUsedResource" parent="baseResource">
+              <property name="hstLinkCreator" ref="org.hippoecm.hst.core.linking.HstLinkCreator"/>
+            </bean>
+          </constructor-arg>
+        </bean>
+        <bean class="org.apache.cxf.jaxrs.lifecycle.SingletonResourceProvider">
+          <constructor-arg>
+            <bean class="org.hippoecm.hst.cmsrest.services.SitesResource" parent="baseResource"/>
+          </constructor-arg>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="jaxrsWhereUsedRestService" class="org.hippoecm.hst.jaxrs.cxf.CXFJaxrsService">
+    <constructor-arg value="jaxrsWhereUsedRestService"/>
+    <property name="servletPath" value=""/>
+    <property name="jaxrsServerFactoryBean" ref="jaxrsWhereUsedRestCxfServerFactoryBean"/>
+  </bean>
+
+  <!-- Pipelining -->
+
+  <bean id="jaxrsWhereUsedServiceValve" class="org.hippoecm.hst.core.container.JaxrsRestServiceValve">
+    <property name="valveName" value="jaxrsWhereUsedServiceValve"/>
+    <constructor-arg ref="jaxrsWhereUsedRestService"/>
+  </bean>
+
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject">
+      <bean class="org.springframework.beans.factory.config.PropertyPathFactoryBean">
+        <property name="targetObject" ref="org.hippoecm.hst.core.container.Pipelines"/>
+        <property name="propertyPath" value="pipelines"/>
+      </bean>
+    </property>
+    <property name="targetMethod" value="put"/>
+    <property name="arguments">
+      <list>
+        <value>WhereUsedRestPipeline</value>
+        <bean class="org.hippoecm.hst.core.container.HstSitePipeline">
+          <property name="initializationValves">
+            <list>
+              <ref bean="initializationValve"/>
+              <ref bean="cmsHostRestRequestContextValve"/>
+              <ref bean="cmsRestSecurityValve"/>
+            </list>
+          </property>
+          <property name="processingValves">
+            <list>
+              <ref bean="noCacheResponseHeadersValve"/>
+              <ref bean="jaxrsWhereUsedServiceValve"/>
+            </list>
+          </property>
+          <property name="cleanupValves">
+            <list>
+              <ref bean="diagnosticReportingValve"/>
+              <ref bean="cleanupValve"/>
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+  <!-- configure that call to the programmatic creation of the _cmsrest Mount for Host 127.0.0.1 -->
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject" ref="org.hippoecm.hst.configuration.model.HstManager"/>
+    <property name="targetMethod" value="addHstConfigurationAugmenter"/>
+    <property name="arguments">
+      <bean class="org.hippoecm.hst.core.hosting.CustomMountAndVirtualHostAugmenter">
+        <property name="customMountName" value="_whereused"/>
+        <property name="customHostName" value="127.0.0.1"/>
+        <property name="customMountNamedPipeline" value="WhereUsedRestPipeline"/>
+        <!--
+          the type must be 'preview' as the links that are created through the CMS rest mount need to
+          be done against preview site map configurations
+        -->
+        <property name="customMountType" value="preview"/>
+      </bean>
+    </property>
+  </bean>
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="targetObject" ref="org.hippoecm.hst.configuration.model.HstManager"/>
+    <property name="targetMethod" value="addHstConfigurationAugmenter"/>
+    <property name="arguments">
+      <bean class="org.hippoecm.hst.core.hosting.CustomMountAndVirtualHostAugmenter">
+        <property name="customMountName" value="_whereused"/>
+        <property name="customHostName" value="[::1]"/>
+        <property name="customMountNamedPipeline" value="WhereUsedRestPipeline"/>
+        <!--
+          the type must be 'preview' as the links that are created through the CMS rest mount need to
+          be done against preview site map configurations
+        -->
+        <property name="customMountType" value="preview"/>
+      </bean>
+    </property>
+  </bean>
+</beans>

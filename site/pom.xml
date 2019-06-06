@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.bloomreach.cms.plugin</groupId>
+    <artifactId>bloomreach-where-used-plugin</artifactId>
+    <version>12.0.7-SNAPSHOT</version>
+  </parent>
+
+  <name>Where Used Plugin Site</name>
+  <description>Where Used Plugin Site</description>
+  <artifactId>bloomreach-where-used-plugin-site</artifactId>
+
+  <packaging>jar</packaging>
+  <version>12.0.7-SNAPSHOT</version>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.onehippo.cms7.hst</groupId>
+      <artifactId>hst-commons</artifactId>
+      <version>${hippo.hst.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.onehippo.cms7.hst.client-modules</groupId>
+      <artifactId>hst-cms-rest</artifactId>
+      <version>${hippo.hst.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.onehippo.cms7.hst.client-modules</groupId>
+      <artifactId>hst-page-composer</artifactId>
+      <version>${hippo.hst.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.onehippo.cms7.hst.components</groupId>
+      <artifactId>hst-security</artifactId>
+      <version>${hippo.hst.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.onehippo.cms7</groupId>
+      <artifactId>hippo-plugin-selections-hst-client</artifactId>
+      <version>${hippo.hst.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.onehippo.cms7.hst</groupId>
+      <artifactId>hst-mock</artifactId>
+      <scope>test</scope>
+      <version>${hippo.hst.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.onehippo.cms7.hst.components</groupId>
+      <artifactId>hst-core</artifactId>
+      <version>${hippo.hst.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.onehippo.cms7</groupId>
+      <artifactId>hippo-services</artifactId>
+      <version>${hippo.services.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.bloomreach.cms.plugin</groupId>
+      <artifactId>bloomreach-where-used-plugin-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+
+</project>

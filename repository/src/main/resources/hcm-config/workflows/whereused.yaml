@@ -1,0 +1,27 @@
+definitions:
+  config:
+    /hippo:configuration/hippo:workflows:
+      /whereused:
+        jcr:primaryType: hipposys:workflowcategory
+        /handle:
+          jcr:primaryType: frontend:workflow
+          hipposys:classname: org.onehippo.repository.documentworkflow.DocumentWorkflowImpl
+          hipposys:display: Where Used Handle
+          hipposys:nodetype: hippo:handle
+          hipposys:privileges: ['hippo:author']
+          hipposys:subtype: hippostdpubwf:document
+          /frontend:renderer:
+            jcr:primaryType: frontend:plugincluster
+            frontend:references: ['browser.id', 'editor.id', 'wicket.model']
+            frontend:services: ['wicket.id']
+            item: ${cluster.id}.item
+            /root:
+              jcr:primaryType: frontend:plugin
+              plugin.class: org.hippoecm.frontend.service.render.ListViewPlugin
+            /whereused:
+              jcr:primaryType: frontend:plugin
+              plugin.class: com.bloomreach.whereused.cms.plugin.WhereUsedActionsPlugin
+              rest.proxy.service.id: hst.rest.where.used.proxy.service
+              wicket.id: ${item}
+    /hippo:configuration/hippo:workflows/default/handle/frontend:renderer/channelactions:
+      .meta:delete: true

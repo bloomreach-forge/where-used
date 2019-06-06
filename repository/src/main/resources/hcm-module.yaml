@@ -1,0 +1,5 @@
+group: hippo-cms
+project:
+    name: where-used-plugin
+    after: [hippo-cms, hippo-repository]
+module: where-used-plugin-repository
