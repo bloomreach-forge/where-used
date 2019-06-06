@@ -11,7 +11,7 @@
   <name>where-used-plugin</name>
   <groupId>org.bloomreach.forge.whereused</groupId>
   <artifactId>whereused</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
 
@@ -31,7 +31,7 @@
     <connection>scm:git:git@github.com:bloomreach-forge/where-used.git</connection>
     <developerConnection>scm:git:git@github.com:bloomreach-forge/where-used.git</developerConnection>
     <url>https://github.com/bloomreach-forge/where-used.git</url>
-    <tag>whereused-1.0.0</tag>
+    <tag>HEAD</tag>
   </scm>
   <distributionManagement>
     <repository>
